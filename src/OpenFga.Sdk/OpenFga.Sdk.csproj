@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFrameworks>netstandard2.0;net48;net8.0;net9.0</TargetFrameworks>
+    <AssemblyName>OpenFga.Sdk</AssemblyName>
+    <PackageId>OpenFga.Sdk</PackageId>
+    <OutputType>Library</OutputType>
+    <LangVersion>10.0</LangVersion>
+    <Authors>OpenFGA</Authors>
+    <Company>OpenFGA</Company>
+    <AssemblyTitle>OpenFGA SDK for .NET</AssemblyTitle>
+    <Description>.NET SDK for OpenFGA</Description>
+    <Copyright>OpenFGA</Copyright>
+    <RootNamespace>OpenFga.Sdk</RootNamespace>
+    <Version>0.8.0</Version>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\OpenFga.Sdk.xml</DocumentationFile>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/openfga/dotnet-sdk.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>https://github.com/openfga/dotnet-sdk/blob/main/CHANGELOG.md</PackageReleaseNotes>
+    <PackageTags>openfga;authorization;fga;fine-grained-authorization;rebac;zanzibar</PackageTags>
+    <PackageIcon>FGAIcon.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsNet8OrGreater>$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))</IsNet8OrGreater>
+  </PropertyGroup>
+
+  <!-- .NET 8.0+ specific settings -->
+  <PropertyGroup Condition="'$(IsNet8OrGreater)' == 'true'">
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!-- Pre-.NET 8.0 settings (requires explicit LangVersion) -->
+  <PropertyGroup Condition="'$(IsNet8OrGreater)' != 'true'">
+    <LangVersion>10.0</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Packages needed for .NET versions < .NET 8 -->
+  <ItemGroup Condition="'$(IsNet8OrGreater)' != 'true'">
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
+    <PackageReference Include="System.Net.Http.Json" Version="8.0.1" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+  <!-- .NET Framework 4.8 specific packages -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
+    <PackageReference Include="System.Memory" Version="4.6.3" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models"/>
+    <None Include="../../assets/FGAIcon.png" Pack="true" Visible="false" PackagePath=""/>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+
+</Project>
